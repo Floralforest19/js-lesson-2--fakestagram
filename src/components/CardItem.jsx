@@ -1,16 +1,29 @@
 import React from 'react'
-//import cardButton from "./cardButton";
-import {useState} from 'react'
+import { useState} from 'react'
+import { Link } from 'react-router-dom'
 
-export default function CardItem({title, description, imageURL}){
+export default function CardItem({id, key, title, description, imageURL}){
     
-    let [isLiked, setIsLiked] = useState(false)
+    let [showDescription, setShowDescription] = useState()
 
-    function handleClick(){
-        //isLiked = true
-        setIsLiked(true)
+    function renderDescription() {
+        if (showDescription) {
+            return <p className="card-text">{description}</p>
+        }else{
+            return ""
+        }
     }
-    
+    function renderShowMore() {
+      if (showDescription == false) {
+        return (
+          <p>
+            <button onClick={() => setShowDescription(true)}>Read more</button>
+          </p>
+        );
+      } else {
+        return "";
+      }
+    }
     
     return(
         <div className="col-md-4">
@@ -18,12 +31,12 @@ export default function CardItem({title, description, imageURL}){
         <img className="card-img-top" src={ imageURL} alt="card image cap"/>
         <div className="card-body">
             <h5 > {title} </h5>
+            {renderShowMore()}
+            {renderDescription()}
             <p> {description} </p>
             <a href={imageURL} className="btn btn-primary">Ladda ner bild 
             </a>
-           <button onClick={handleClick} className="btn btn-primary btn-block">
-               {isLiked ? "Du har gillat": "Gilla"}
-               </button>
+           <Link to={`/image/${id}`}>Go to image</Link>
         </div>
         </div>
         </div>
