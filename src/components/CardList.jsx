@@ -3,26 +3,26 @@ import CardItem from "./CardItem";
 import { useState, useEffects } from "react";
 
 export default function CardList() {
-  let [imageList, setImageList] = useState([]);
+  let [infoList, setInfoList] = useState([]);
 
-  function fetchImageList() {
-    fetch("https://image-mock-data.firebaseio.com/images.json")
+  function fetchInfoList() {
+    fetch("https://mock-data-api.firebaseio.com/marvel-characters.json")
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        setImageList(result);
+        setInfoList(result);
       });
   }
 
   useEffect(() => {
-    fetchImageList();
+    fetchInfoList();
   }, []);
 
   return (
     <div>
-      <h2 onClick={fetchImageList}>Card List</h2>
+      <h2 onClick={fetchInfoList}>Card List</h2>
       <div className="row">
-        {imageList.map((item, index) => {
+        {infoList.map((item, index) => {
           return (
             <CardItem
               title={item.title}

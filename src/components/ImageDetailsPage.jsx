@@ -2,28 +2,29 @@ import React from "react";
 import { useEffect, useState } from "react";
 import CarditemDetails from "./CarditemDetails";
 
-export default function ImageDetailsPage(props) {
-  let [imageData, setImageDat] = useState > {};
+export default function InfoDetailsPage(props) {
+  let [infoData, setInfoDat] = useState > {};
   console.log(props);
 
-  function fetchImage() {
+  function fetchInfo() {
     const imageId = props.match.params.id;
-    fetch("https://image-mock-data.firebaseio.com/image/" + imageId + ".json")
+    console.log(imageId);
+    fetch("https://mock-data-api.firebaseio.com/marvel-characters.json")
       .then((res) => res.json())
       .then((result) => {
-        setImageDat(result);
+        setInfoDat(result);
       });
   }
   useEffect(() => {
-    fetchImage();
+    fetchInfo();
   }, []);
 
   return (
     <div>
       <CarditemDetails
-        title={imageData.title}
-        description={imageData.description}
-        imageURL={imageData.imageURL}
+        title={infoData.data.results[0].name}
+        description={infoData.data.results[0].id}
+        imageURL={infoData.data.results[0].modified}
       />
     </div>
   );
